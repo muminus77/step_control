@@ -1,0 +1,14 @@
+<launch>
+<include file="$(find step_control)/launch/joy.launch" />
+<node
+pkg="step_control"
+type="step_control_node"
+name="step_control_node"
+required="true"
+output="screen"
+>
+
+</node>
+</launch>
+
+
