@@ -61,23 +61,26 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
         {
 
         case 0:
-            sendControl(NAVIGATION_START);
+            //sendControl(NAVIGATION_START);
+            stepDetectorStart();
 
         break;
         case 1:
-            sendControl(NAVIGATION_STOP);
+            //sendControl(NAVIGATION_STOP);
         break;
         case 2:
             recordTopicStart();
 
         break;
         case 3:
-            recordTopicStop();
+            stepDetectorStop();
 
         break;
         case 4:
+
         break;
         case 5:
+            recordTopicStop();
         break;
         case 6:
         break;
@@ -141,5 +144,21 @@ void StepControl::recordTopicStop()
     record_client.call(srv);    //no response - record node is simply killed to stop recording
         voice_command.data="Nagrywanie zakończone";
         command_pub.publish(voice_command);
+}
+
+void StepControl::stepDetectorStart()
+{
+    std::stringstream ss;
+    ss << "screen -S pride -p 3 -X stuff \"roslaunch step_detector step_detector.launch \n\"";
+    system (ss.str().c_str());
+    ss.str("");
+}
+
+void StepControl::stepDetectorStop()
+{
+    std::stringstream ss;
+    ss << "screen -S pride -p 3 -X  stuff \"^C\n\"";
+     system (ss.str().c_str());
+     ss.str("");
 }
 

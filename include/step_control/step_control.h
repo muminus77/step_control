@@ -63,6 +63,8 @@ private:
     bool checkButton (sensor_msgs::Joy joy, int button_id);
     void recordTopicStart();
     void recordTopicStop();
+    void stepDetectorStart();
+    void stepDetectorStop();
 
 
 
