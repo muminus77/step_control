@@ -138,15 +138,8 @@ void StepControl::recordTopicStop()
     //call service
     record_ros::String_cmd srv;
     srv.request.cmd="stop";
-    record_client.call(srv);
-    if(srv.response.res=="stopping recorder")
-    {
+    record_client.call(srv);    //no response - record node is simply killed to stop recording
         voice_command.data="Nagrywanie zakończone";
         command_pub.publish(voice_command);
-    }
-    else
-    {
-        voice_command.data="Błąd nagrywania";
-        command_pub.publish(voice_command);
-    }
 }
+
