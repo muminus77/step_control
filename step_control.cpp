@@ -22,6 +22,9 @@ StepControl::StepControl():
     nh_priv.getParam("record_topics", record_topics);
     ROS_INFO_STREAM("Topic to that can be recorded: " << record_topics);
 
+    record_client= nh.serviceClient<record_ros::String_cmd>("record/cmd");
+
+
 
 }
 
@@ -65,15 +68,11 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
             sendControl(NAVIGATION_STOP);
         break;
         case 2:
-            voice_command.data="Nagrywanie rozpoczęte";
-            command_pub.publish(voice_command);
-
-            recordTopic();
+            recordTopicStart();
 
         break;
         case 3:
-            voice_command.data="Stop";
-            command_pub.publish(voice_command);
+            recordTopicStop();
 
         break;
         case 4:
@@ -117,8 +116,36 @@ bool StepControl::checkButton(sensor_msgs::Joy joy, int button_id)
         return false;
 }
 
-void StepControl::recordTopic()
+void StepControl::recordTopicStart()
 {
     //call service
+    record_ros::String_cmd srv;
+    srv.request.cmd="record";
+    if(record_client.call(srv))
+    {
+        voice_command.data="Nagrywanie rozpoczęte";
+        command_pub.publish(voice_command);
+    }
+    else
+    {
+        voice_command.data="Błąd nagrywania";
+        command_pub.publish(voice_command);
+    }
+}
 
+void StepControl::recordTopicStop()
+{
+    //call service
+    record_ros::String_cmd srv;
+    srv.request.cmd="stop";
+    if(record_client.call(srv))
+    {
+        voice_command.data="Nagrywanie zakończone";
+        command_pub.publish(voice_command);
+    }
+    else
+    {
+        voice_command.data="Błąd nagrywania";
+        command_pub.publish(voice_command);
+    }
 }

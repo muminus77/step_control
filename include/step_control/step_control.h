@@ -11,6 +11,7 @@
 #include "std_msgs/Float32.h"
 #include "std_msgs/String.h"
 #include <step_msgs/Control.h>
+#include <record_ros/String_cmd.h>
 //#include <step_msgs/Step.h>
 
 
@@ -39,6 +40,7 @@ public:
     ros::Subscriber joy_sub;
     ros::Publisher control_pub;
     ros::Publisher command_pub;
+    ros::ServiceClient record_client;
 
 
     void JoyMessageReceived(const sensor_msgs::Joy &joy);
@@ -59,7 +61,9 @@ private:
 
     void sendControl (int control_request);
     bool checkButton (sensor_msgs::Joy joy, int button_id);
-    void recordTopic();
+    void recordTopicStart();
+    void recordTopicStop();
+
 
 
 
