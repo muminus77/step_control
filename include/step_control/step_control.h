@@ -40,6 +40,7 @@ public:
     ros::Subscriber joy_sub;
     ros::Publisher control_pub;
     ros::Publisher command_pub;
+    ros::Publisher enable_pub;
     ros::ServiceClient record_client;
 
 
@@ -58,6 +59,7 @@ private:
     std_msgs::String voice_command;
 
     std::string record_topics;
+    bool _enable;
 
     void sendControl (int control_request);
     bool checkButton (sensor_msgs::Joy joy, int button_id);
@@ -65,6 +67,7 @@ private:
     void recordTopicStop();
     void stepDetectorStart();
     void stepDetectorStop();
+    void sendEnable();
 
 
 

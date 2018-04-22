@@ -14,6 +14,7 @@ StepControl::StepControl():
 
     control_pub = nh.advertise<step_msgs::Control>("step_control", 1000);
     command_pub = nh.advertise<std_msgs::String>("step_command", 1000);
+    enable_pub = nh.advertise<std_msgs::Bool>("step_enable", 1000);
 
     joy_sub = nh.subscribe("joy", 10, &StepControl::JoyMessageReceived, this);
     init_flag=true;
@@ -23,6 +24,8 @@ StepControl::StepControl():
     ROS_INFO_STREAM("Topic to that can be recorded: " << record_topics);
 
     record_client= nh.serviceClient<record_ros::String_cmd>("record/cmd");
+
+    _enable=false;
 
 
 
@@ -83,6 +86,8 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
             recordTopicStop();
         break;
         case 6:
+            sendEnable();
+
         break;
         case 7:
         break;
@@ -160,5 +165,13 @@ void StepControl::stepDetectorStop()
     ss << "screen -S pride -p 3 -X  stuff \"^C\n\"";
      system (ss.str().c_str());
      ss.str("");
+}
+
+void StepControl::sendEnable()
+{
+    _enable=!_enable;
+    std_msgs::Bool enable_msg;
+    enable_msg.data=_enable;
+    enable_pub.publish(enable_msg);
 }
 
