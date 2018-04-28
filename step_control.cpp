@@ -90,6 +90,7 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
 
         break;
         case 7:
+            sendControl(DISTANCE_RESET);
         break;
         case -1:
         break;
