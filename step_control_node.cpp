@@ -18,7 +18,7 @@ int main(int argc, char **argv)
         ros::spinOnce();
         if(!loop_rate.sleep())
         {
-            ROS_WARN("Control loop too slow !");
+            //ROS_WARN("Control loop too slow !");
         }
     }
     delete _step_control;

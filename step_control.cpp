@@ -69,6 +69,8 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
 
         break;
         case 1:
+            sendControl(RECORD_START);
+
             //sendControl(NAVIGATION_STOP);
         break;
         case 2:
@@ -80,6 +82,7 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
 
         break;
         case 4:
+            sendControl(RECORD_STOP);
 
         break;
         case 5:
@@ -91,6 +94,10 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
         break;
         case 7:
             sendControl(DISTANCE_RESET);
+        break;
+        case 8:
+        break;
+        case 9:
         break;
         case -1:
         break;
