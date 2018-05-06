@@ -52,7 +52,7 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
     else
     {
         int pressed_button_id=-1;
-        for(int i=0; i<8; i++)
+        for(int i=0; i<JOY_BUTTONS; i++)
         {
             if(checkButton(joy, i))
             {
@@ -64,7 +64,7 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
         {
 
         case 0:
-            //sendControl(NAVIGATION_START);
+
             stepDetectorStart();
 
         break;
@@ -94,8 +94,12 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
         break;
         case 7:
             sendControl(DISTANCE_RESET);
+
         break;
         case 8:
+            sendControl(NAVIGATION_START);
+
+
         break;
         case 9:
         break;
