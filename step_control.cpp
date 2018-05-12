@@ -98,10 +98,9 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
         break;
         case 8:
             sendControl(NAVIGATION_START);
-
-
         break;
         case 9:
+            sendControl(OBSTACLE_MARK);
         break;
         case -1:
         break;
