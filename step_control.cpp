@@ -66,7 +66,8 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
         case 0:
 
             stepDetectorStart();
-
+            voice_command.data="Detektor włączony";
+            command_pub.publish(voice_command);
         break;
         case 1:
             sendControl(RECORD_START);
@@ -79,6 +80,8 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
         break;
         case 3:
             stepDetectorStop();
+            voice_command.data="Detektor wyłączony";
+            command_pub.publish(voice_command);
 
         break;
         case 4:
