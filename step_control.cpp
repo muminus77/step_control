@@ -70,13 +70,10 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
             command_pub.publish(voice_command);
         break;
         case 1:
-            sendControl(RECORD_START);
-
-            //sendControl(NAVIGATION_STOP);
+            recordTopicStart();
         break;
         case 2:
-            recordTopicStart();
-
+            sendControl(RECORD_START);
         break;
         case 3:
             stepDetectorStop();
@@ -85,11 +82,10 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
 
         break;
         case 4:
-            sendControl(RECORD_STOP);
-
+            recordTopicStop();
         break;
         case 5:
-            recordTopicStop();
+            sendControl(RECORD_STOP);
         break;
         case 6:
             sendEnable();
