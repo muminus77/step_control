@@ -56,6 +56,7 @@ private:
     bool init_flag;
     int steps;
     bool joy_last_buttons[JOY_BUTTONS];
+    bool joy_last_axes[4];
     std_msgs::String voice_command;
 
     std::string record_topics;
@@ -72,6 +73,7 @@ private:
 
 
 
+    int checkAxes(sensor_msgs::Joy joy);
 };
 
 #endif

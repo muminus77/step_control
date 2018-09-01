@@ -26,9 +26,6 @@ StepControl::StepControl():
     record_client= nh.serviceClient<record_ros::String_cmd>("record/cmd");
 
     _enable=false;
-
-
-
 }
 
 
@@ -45,6 +42,14 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
             for(int i=0; i<joy.buttons.size(); i++)
             {
                 joy_last_buttons[i]=joy.buttons[i];
+            }
+            init_flag=false;
+        }
+        if(!joy.axes.empty())
+        {
+            for(int i=0; i<joy.axes.size(); i++)
+            {
+                joy_last_axes[i]=joy.axes[i];
             }
             init_flag=false;
         }
@@ -103,7 +108,14 @@ void StepControl::JoyMessageReceived(const sensor_msgs::Joy &joy)
         break;
         case -1:
         break;
+        }
 
+        switch(checkAxes(joy))
+        {
+        case 0:
+        break;
+        case 1:
+             sendControl(NEXT_COURSE);
 
         }
     }
@@ -132,6 +144,17 @@ bool StepControl::checkButton(sensor_msgs::Joy joy, int button_id)
     }
     else
         return false;
+}
+
+int StepControl::checkAxes(sensor_msgs::Joy joy)
+{
+    if(joy.axes[1]!=joy_last_axes[1])
+    {
+        joy_last_axes[1]=joy.axes[1];
+        return  joy_last_axes[1];
+    }
+    else
+        return 0;
 }
 
 void StepControl::recordTopicStart()

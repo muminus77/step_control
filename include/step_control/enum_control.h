@@ -4,7 +4,8 @@ enum control{
     RECORD_START=3,
     RECORD_STOP=4,
     DISTANCE_RESET=5,
-    OBSTACLE_MARK=6
+    OBSTACLE_MARK=6,
+    NEXT_COURSE=7,
 
 
 };
